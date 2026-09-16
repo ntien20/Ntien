@@ -1,0 +1,190 @@
+/* ==============================================================================
+   THE ABYSSAL COSMOS - HIỆU ỨNG HUYỀN ẢO & U ÁM (COSMOS THEME & VIBES)
+   Glassmorphism, viền phát sáng ma mị, gradient hư không và animation điện ảnh
+============================================================================== */
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: var(--bg-card-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-void);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.7),
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85),
+              0 0 25px -5px rgba(123, 63, 228, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Ambient Radial Fog */
+.cosmic-radial-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(140px);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+.glow-violet {
+  background: radial-gradient(circle, #7b3fe4 0%, transparent 70%);
+}
+
+.glow-cyan {
+  background: radial-gradient(circle, #00f5d4 0%, transparent 70%);
+}
+
+.glow-gold {
+  background: radial-gradient(circle, #c99a4e 0%, transparent 70%);
+}
+
+/* Cosmic Badges & Tags */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  backdrop-filter: blur(8px);
+}
+
+.badge-accent {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #c084fc;
+}
+
+.badge-cyan {
+  background: rgba(0, 245, 212, 0.12);
+  border-color: rgba(0, 245, 212, 0.35);
+  color: #5eead4;
+}
+
+.badge-gold {
+  background: rgba(201, 154, 78, 0.15);
+  border-color: rgba(201, 154, 78, 0.4);
+  color: #fbbf24;
+}
+
+/* Glowing Cosmic Buttons */
+.btn-cosmic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.btn-cosmic-primary {
+  background: linear-gradient(135deg, #7b3fe4, #4c1d95);
+  color: #ffffff;
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 4px 20px rgba(123, 63, 228, 0.45);
+}
+
+.btn-cosmic-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(123, 63, 228, 0.7),
+              0 0 15px rgba(0, 245, 212, 0.4);
+  border-color: rgba(0, 245, 212, 0.6);
+}
+
+.btn-cosmic-outline {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--text-primary);
+  backdrop-filter: blur(10px);
+}
+
+.btn-cosmic-outline:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+/* Subtle Floating Animations */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.04); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float-gentle 7s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 90s linear infinite;
+}
+
+/* Audio Pulse Waveform Animation */
+.audio-pulse {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.audio-pulse span {
+  width: 3px;
+  background: var(--accent-void-cyan);
+  border-radius: 2px;
+  height: 4px;
+  transition: height 0.2s ease;
+}
+
+.audio-pulse.active span:nth-child(1) { animation: soundBar 0.8s ease-in-out infinite 0.1s; }
+.audio-pulse.active span:nth-child(2) { animation: soundBar 0.8s ease-in-out infinite 0.3s; }
+.audio-pulse.active span:nth-child(3) { animation: soundBar 0.8s ease-in-out infinite 0.2s; }
+.audio-pulse.active span:nth-child(4) { animation: soundBar 0.8s ease-in-out infinite 0.4s; }
+
+@keyframes soundBar {
+  0%, 100% { height: 4px; }
+  50% { height: 18px; }
+}
+
+/* Keyframe for modal fade-in */
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.96) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}

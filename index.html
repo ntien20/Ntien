@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hư Không Vũ Trụ | The Abyssal Cosmos - Vực Thẳm Vĩnh Hằng & Bách Khoa Toàn Thư</title>
+  <meta name="description" content="Khám phá toàn bộ vũ trụ trong không gian huyền ảo, u ám và rợn ngợp. Bách khoa toàn thư thiên văn học, mô phỏng hố đen tương tác, âm thanh vũ trụ và phòng thí nghiệm bụi sao.">
+  <meta name="keywords" content="vũ trụ, thiên văn, hố đen, tinh vân, TON 618, khoảng trống bootes, máy tính bụi sao, hệ mặt trời">
+  <meta name="author" content="Phạm Nhật Tiến">
+  
+  <!-- Favicon / Theme -->
+  <meta name="theme-color" content="#030308">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/cosmos-theme.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Canvas Nền Vũ Trụ 3D Tương Tác Chuột & Thấu Kính Hấp Dẫn -->
+  <canvas id="cosmos-background"></canvas>
+
+  <div class="app-container">
+
+    <!-- Header & Thanh Điều Hướng -->
+    <header class="site-header" id="main-header">
+      <div class="container header-inner">
+        <a href="#hero" class="brand-logo" id="brand-logo-link">
+          <div class="brand-icon-wrap">
+            <i data-lucide="disc" class="icon-small" style="color: #a855f7;"></i>
+          </div>
+          <div>
+            <span>ABYSSAL COSMOS</span>
+            <span class="brand-title-sub">HƯ KHÔNG VŨ TRỤ</span>
+          </div>
+        </a>
+
+        <nav class="main-nav" id="desktop-nav">
+          <a href="#hero" class="nav-link">Cửa Ngõ</a>
+          <a href="#solar-orrery-section" class="nav-link">Thái Dương & Tiểu Hành Tinh</a>
+          <a href="#encyclopedia" class="nav-link">Bách Khoa Thiên Thể</a>
+          <a href="#blackhole-sim" class="nav-link">Mô Phỏng Hố Đen</a>
+          <a href="#timeline" class="nav-link">Niên Đại</a>
+          <a href="#interactive-lab" class="nav-link">Phòng Thí Nghiệm</a>
+        </nav>
+
+        <!-- Trình Điều Khiển Âm Thanh Vũ Trụ (Web Audio Synth) -->
+        <div class="header-audio-widget" id="header-audio-container">
+          <button class="audio-btn" id="audio-master-toggle" title="Bật/Tắt âm thanh hư không vũ trụ">
+            <i data-lucide="volume-2" class="icon-small"></i>
+            <span class="audio-btn-label">Âm Hư Không</span>
+          </button>
+          
+          <div class="audio-pulse" id="audio-pulse-indicator" title="Tín hiệu sóng âm">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <canvas id="audio-visualizer-canvas" width="60" height="20" title="Phổ âm thanh thời gian thực"></canvas>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- 1. Hero Section: Cửa Ngõ Hư Không -->
+      <section class="hero-section section-wrapper" id="hero">
+        <div class="cosmic-radial-glow glow-violet" style="top: 10%; left: 20%;"></div>
+        <div class="cosmic-radial-glow glow-cyan" style="bottom: 10%; right: 20%;"></div>
+
+        <div class="container hero-content">
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+            <div class="hero-pill" style="margin-bottom: 0;">
+              <i data-lucide="sparkles" class="icon-nano"></i>
+              <span>VỰC THẲM VÔ TẬN CỦA KHÔNG - THỜI GIAN</span>
+            </div>
+            <div class="hero-pill" style="margin-bottom: 0; background: rgba(0, 245, 212, 0.1); border-color: rgba(0, 245, 212, 0.3); color: var(--accent-void-cyan);">
+              <i data-lucide="user" class="icon-nano"></i>
+              <span>Tác giả: <strong style="color: #ffffff; margin-left: 4px;">Phạm Nhật Tiến</strong></span>
+            </div>
+          </div>
+
+          <h1 class="hero-title">BƯỚC VÀO HƯ KHÔNG HUYỀN ẢO</h1>
+
+          <p class="hero-lead">
+            Nơi ánh sáng bị bẻ cong, thời gian chết dần bên miệng những dị điểm vô cực, và con người chỉ là những hạt bụi mang ý thức tự soi mình vào bóng tối vĩnh hằng của vũ trụ.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#encyclopedia" class="btn-cosmic btn-cosmic-primary" id="hero-explore-cta">
+              <i data-lucide="compass" class="icon-small"></i>
+              <span>Khám Phá Vạn Vật</span>
+            </a>
+            <a href="#blackhole-sim" class="btn-cosmic btn-cosmic-outline" id="hero-sim-cta">
+              <i data-lucide="orbit" class="icon-small"></i>
+              <span>Thử Thách Hố Đen</span>
+            </a>
+            <a href="#interactive-lab" class="btn-cosmic btn-cosmic-outline" id="hero-lab-cta">
+              <i data-lucide="atom" class="icon-small"></i>
+              <span>Tính Toán Bụi Sao</span>
+            </a>
+          </div>
+
+          <!-- Lời thì thầm của vũ trụ (Cosmic Whispers Widget) -->
+          <div class="cosmic-whisper-box" id="cosmic-whisper-container">
+            <i data-lucide="quote" class="icon-small" style="color: var(--accent-singularity);"></i>
+            <span id="cosmic-whisper-text">“Vũ trụ không có nghĩa vụ phải cư xử hợp lý với trực giác của loài người.” — Neil deGrasse Tyson</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Bách Khoa Toàn Thư Vũ Trụ (Encyclopedia) -->
+      <section class="section-wrapper" id="encyclopedia">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag">
+              <i data-lucide="book-open" class="icon-nano"></i>
+              <span>LƯU TRỮ VĨNH HẰNG</span>
+            </div>
+            <h2 class="section-title">BÁCH KHOA TOÀN THƯ THIÊN THỂ</h2>
+            <p class="section-subtitle">
+              Từ quái thú hư không nuốt chửng hàng tỷ mặt trời, những tinh vân lạnh giá hơn cái chết, đến các thế giới dị thường nơi bầu trời đổ mưa sắt nóng chảy.
+            </p>
+          </div>
+
+          <!-- Thanh Tìm Kiếm & Lọc Danh Mục -->
+          <div class="search-filter-wrapper">
+            <div class="search-input-box">
+              <i data-lucide="search" class="icon-small search-icon"></i>
+              <input 
+                type="text" 
+                id="cosmic-search-input" 
+                class="cosmic-input" 
+                placeholder="Tìm kiếm thiên thể (ví dụ: TON 618, Sao Từ, Boötes, James Webb, Mặt Trời)..."
+                autocomplete="off"
+              >
+              <button class="clear-search" id="clear-search-btn" title="Xóa tìm kiếm">
+                <i data-lucide="x" class="icon-small"></i>
+              </button>
+            </div>
+
+            <div class="category-filter-bar" id="category-filter-bar">
+              <!-- Render động bởi app.js -->
+            </div>
+          </div>
+
+          <!-- Grid Danh Sách Thiên Thể -->
+          <div class="cosmic-grid" id="cosmic-entities-grid">
+            <!-- Render động bởi app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.5. Mô Phỏng Thái Dương Hệ & Vành Đai Tiểu Hành Tinh (Solar Orrery) -->
+      <section class="section-wrapper" id="solar-orrery-section">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag">
+              <i data-lucide="orbit" class="icon-nano"></i>
+              <span>VŨ ĐIỆU KEPLER & VÀNH ĐAI BỤI ĐÁ</span>
+            </div>
+            <h2 class="section-title">THÁI DƯƠNG HỆ & TIỂU HÀNH TINH</h2>
+            <p class="section-subtitle">
+              Mô phỏng quỹ đạo thực tế của 8 hành tinh, Sao Diêm Vương, hơn 650 mảnh vỡ Vành Đai Tiểu Hành Tinh và các kẻ viếng thăm nguy hiểm như Apophis và 1I/'Oumuamua.
+            </p>
+          </div>
+
+          <!-- Giao diện Orrery -->
+          <div class="orrery-layout">
+            <div class="orrery-canvas-wrap glass-panel">
+              <canvas id="solar-orrery-canvas"></canvas>
+              <div class="sim-overlay-hint">
+                <i data-lucide="mouse-pointer" class="icon-nano"></i>
+                <span>Nhấp chuột vào hành tinh hoặc tiểu hành tinh để khóa tiêu điểm quan sát</span>
+              </div>
+            </div>
+
+            <div class="orrery-controls-panel glass-panel">
+              <h3 style="font-size: 1.25rem; color: #ffffff; margin-bottom: 4px;">Điều Khiển Quỹ Đạo</h3>
+              <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 12px;">Mô phỏng cơ học thiên thể Kepler</p>
+
+              <!-- Thẻ thông tin mục tiêu được chọn -->
+              <div id="orrery-target-card">
+                <div class="glass-panel" style="padding: 14px; border-color: rgba(255,255,255,0.08);">
+                  <span class="badge badge-accent" style="margin-bottom: 6px;">Mục Tiêu Mặc Định</span>
+                  <h4 style="color: #ffffff; font-size: 1.1rem; margin-bottom: 4px;">Mặt Trời & Thái Dương Hệ</h4>
+                  <p style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+                    Nhấp vào bất kỳ hành tinh (Thủy, Kim, Trái Đất, Hỏa, Mộc, Thổ, Thiên Vương, Hải Vương) hoặc tiểu hành tinh (Ceres, Psyche, Apophis, 'Oumuamua) trên canvas để xem chi tiết.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Tốc độ thời gian -->
+              <div class="sim-control-group">
+                <label class="control-label">Gia Tốc Thời Gian:</label>
+                <div class="speed-btn-group">
+                  <button class="speed-btn" onclick="window.solarOrrery.setSpeed(0.5); this.parentElement.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">0.5x</button>
+                  <button class="speed-btn active" onclick="window.solarOrrery.setSpeed(1); this.parentElement.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">1x</button>
+                  <button class="speed-btn" onclick="window.solarOrrery.setSpeed(5); this.parentElement.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">5x</button>
+                  <button class="speed-btn" onclick="window.solarOrrery.setSpeed(20); this.parentElement.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">20x</button>
+                </div>
+              </div>
+
+              <!-- Tùy chọn hiển thị -->
+              <div class="orrery-toggle-row">
+                <span>Vành Đai Tiểu Hành Tinh (650+ đá)</span>
+                <input type="checkbox" id="toggle-belt" checked onchange="window.solarOrrery.toggleBelt(this.checked)" style="accent-color: var(--accent-void-cyan); cursor: pointer;">
+              </div>
+
+              <div class="orrery-toggle-row">
+                <span>Đường Vẽ Quỹ Đạo Kepler</span>
+                <input type="checkbox" id="toggle-orbits" checked onchange="window.solarOrrery.toggleOrbits(this.checked)" style="accent-color: var(--accent-violet); cursor: pointer;">
+              </div>
+
+              <!-- Nút tạm dừng -->
+              <button class="btn-cosmic btn-cosmic-outline" style="padding: 10px;" onclick="const p = window.solarOrrery.togglePause(); this.querySelector('span').textContent = p ? 'Tiếp Tục Chuyển Động' : 'Tạm Dừng Quỹ Đạo';">
+                <i data-lucide="play-pause" class="icon-small"></i>
+                <span>Tạm Dừng Quỹ Đạo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bộ Đánh Giá Mối Đe Dọa Va Chạm Tiểu Hành Tinh -->
+          <div class="glass-panel" style="margin-top: 32px; padding: 32px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+              <i data-lucide="shield-alert" class="icon-medium" style="color: #ef4444;"></i>
+              <h3 style="font-size: 1.5rem; color: #ffffff;">Mô Phỏng Thảm Họa Va Chạm Tiểu Hành Tinh</h3>
+            </div>
+            <p style="font-size: 0.92rem; color: #94a3b8; margin-bottom: 24px;">
+              Tính toán động năng hủy diệt, kích thước miệng hố va chạm và hậu quả khí quyển nếu một trong những tiểu hành tinh nguy hiểm đâm sầm vào Trái Đất.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
+              <div class="input-field-wrap">
+                <label class="input-label" for="impact-asteroid-select">Chọn Thiên Thể Va Chạm:</label>
+                <select id="impact-asteroid-select" class="calc-input" style="width: 100%;">
+                  <option value="apophis">99942 Apophis (370m - Nỗi lo 2029)</option>
+                  <option value="bennu">101955 Bennu (490m - OSIRIS-REx)</option>
+                  <option value="chelyabinsk">Thiên thạch Chelyabinsk 2013 (20m)</option>
+                  <option value="tunguska">Vụ nổ Tunguska 1908 (60m)</option>
+                  <option value="chicxulub">Kẻ Tuyệt Diệt Chicxulub (12 km - Khủng long)</option>
+                  <option value="psyche">16 Psyche (226 km - Kim loại hủy diệt hành tinh)</option>
+                </select>
+              </div>
+
+              <div class="input-field-wrap">
+                <label class="input-label" for="impact-target-type">Vị Trí Rơi Trúng:</label>
+                <select id="impact-target-type" class="calc-input" style="width: 100%;">
+                  <option value="land">Đất Liền (Tạo hố va chạm, sóng xung kích, bụi che nắng)</option>
+                  <option value="ocean">Đại Dương (Sóng thần siêu khủng khiếp)</option>
+                </select>
+              </div>
+
+              <div style="display: flex; align-items: flex-end;">
+                <button class="btn-cosmic btn-cosmic-primary" id="impact-calc-btn" style="width: 100%; padding: 12px 20px;">
+                  <i data-lucide="zap" class="icon-small"></i>
+                  <span>Tính Toán Thảm Họa</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="impact-results-area">
+              <!-- Render kết quả tại đây -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Mô Phỏng Hố Đen Tương Tác (Gargantua Simulator) -->
+      <section class="section-wrapper" id="blackhole-sim">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag">
+              <i data-lucide="disc" class="icon-nano"></i>
+              <span>VỰC THẲM HẤP DẪN</span>
+            </div>
+            <h2 class="section-title">PHÒNG THÍ NGHIỆM HỐ ĐEN GARGANTUA</h2>
+            <p class="section-subtitle">
+              Tương tác trực tiếp với chân trời sự kiện, đĩa bồi tụ tương đối tính và chứng kiến hiện tượng Spaghettification (kéo sợi mì) khi vật chất bị nghiền nát.
+            </p>
+          </div>
+
+          <div class="sim-container">
+            <!-- Canvas Mô Phỏng Hố Đen -->
+            <div class="sim-canvas-wrap glass-panel">
+              <canvas id="blackhole-canvas"></canvas>
+              <div class="sim-overlay-hint">
+                <i data-lucide="mouse-pointer" class="icon-nano"></i>
+                <span>Nhấp chuột vào khung hình để thả thiên thể vào quỹ đạo hố đen</span>
+              </div>
+            </div>
+
+            <!-- Bảng Điều Khiển Simulator -->
+            <div class="sim-controls-panel glass-panel">
+              <h3 style="font-size: 1.25rem; margin-bottom: 8px; color: #ffffff;">Thông Số Không Gian</h3>
+              
+              <!-- HUD Thông Số Thực -->
+              <div class="sim-hud-grid">
+                <div class="hud-item">
+                  <span class="hud-label">Đã Nuốt Chửng</span>
+                  <span class="hud-value" id="sim-consumed-count">0</span>
+                </div>
+                <div class="hud-item">
+                  <span class="hud-label">Giãn Nở Thời Gian</span>
+                  <span class="hud-value" id="sim-dilation-factor">1.00x</span>
+                </div>
+                <div class="hud-item">
+                  <span class="hud-label">Thiên Thể Quỹ Đạo</span>
+                  <span class="hud-value" id="sim-active-count">0</span>
+                </div>
+                <div class="hud-item">
+                  <span class="hud-label">Vận Tốc Ánh Sáng</span>
+                  <span class="hud-value">299.792 km/s</span>
+                </div>
+              </div>
+
+              <!-- Chọn loại vật thể thả vào -->
+              <div class="sim-control-group">
+                <label class="control-label">Chọn Vật Thể Khởi Điểm:</label>
+                <div class="body-type-buttons">
+                  <button class="body-type-btn active" onclick="window.blackHoleSim.setBodyType('probe'); this.parentElement.querySelectorAll('.body-type-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                    Tàu Thăm Dò
+                  </button>
+                  <button class="body-type-btn" onclick="window.blackHoleSim.setBodyType('asteroid'); this.parentElement.querySelectorAll('.body-type-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                    Tiểu Hành Tinh
+                  </button>
+                  <button class="body-type-btn" onclick="window.blackHoleSim.setBodyType('star'); this.parentElement.querySelectorAll('.body-type-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                    Sao Khổng Lồ
+                  </button>
+                  <button class="body-type-btn" onclick="window.blackHoleSim.setBodyType('photon'); this.parentElement.querySelectorAll('.body-type-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">
+                    Tia Photon
+                  </button>
+                </div>
+              </div>
+
+              <!-- Khối lượng hố đen -->
+              <div class="sim-control-group">
+                <div style="display: flex; justify-content: space-between;">
+                  <label class="control-label" for="mass-slider">Khối Lượng Hố Đen (M):</label>
+                  <span id="mass-display" style="font-size: 0.8rem; color: var(--accent-void-cyan);">2800 M☉</span>
+                </div>
+                <input 
+                  type="range" 
+                  id="mass-slider" 
+                  class="cosmic-slider" 
+                  min="1000" 
+                  max="6000" 
+                  value="2800"
+                  oninput="document.getElementById('mass-display').textContent = this.value + ' M☉'; window.blackHoleSim.setMass(parseInt(this.value));"
+                >
+              </div>
+
+              <!-- Tùy chỉnh chế độ âm thanh nền -->
+              <div class="sim-control-group">
+                <label class="control-label" for="audio-mode-select">Âm Vọng Không Gian:</label>
+                <select id="audio-mode-select" class="calc-input" style="width: 100%;">
+                  <option value="abyss">Hư Không Sâu Thẳm (Sub-Bass Void)</option>
+                  <option value="pulsar">Nhịp Đập Sao Xung (Pulsar Radio)</option>
+                  <option value="nebula">Gió Tinh Vân (Cosmic Wind)</option>
+                </select>
+              </div>
+
+              <!-- Nút hành động -->
+              <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn-cosmic btn-cosmic-outline" style="flex: 1; padding: 10px;" onclick="window.blackHoleSim.clearBodies();">
+                  <i data-lucide="trash-2" class="icon-small"></i>
+                  <span>Xóa Quỹ Đạo</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Phòng Thí Nghiệm Vũ Trụ & Tính Toán Bụi Sao (Interactive Lab) -->
+      <section class="section-wrapper" id="interactive-lab">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag">
+              <i data-lucide="flask-conical" class="icon-nano"></i>
+              <span>Ý THỨC & NGUỒN CỘI</span>
+            </div>
+            <h2 class="section-title">PHÒNG THÍ NGHIỆM TƯƠNG TÁC</h2>
+            <p class="section-subtitle">
+              Khám phá sự liên kết mật thiết giữa cơ thể bạn với các vì sao cổ đại và chiêm ngưỡng sự chênh lệch quy mô từ hạt proton đến chân trời vũ trụ.
+            </p>
+          </div>
+
+          <div class="lab-grid">
+            <!-- Máy tính bụi sao -->
+            <div class="lab-card glass-panel">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <i data-lucide="sparkles" class="icon-medium" style="color: var(--accent-singularity);"></i>
+                <h3 class="lab-card-title">Máy Tính Nguồn Gốc Bụi Sao</h3>
+              </div>
+              <p class="lab-card-desc">
+                Nhập cân nặng và ngày sinh để giải mã từng nguyên tử cấu thành nên cơ thể bạn đã trải qua những thảm họa nhiệt hạch nào trong lịch sử vũ trụ.
+              </p>
+
+              <div class="calc-inputs">
+                <div class="input-field-wrap">
+                  <label class="input-label" for="calc-weight">Cân nặng của bạn (kg):</label>
+                  <input type="number" id="calc-weight" class="calc-input" value="62" min="20" max="250">
+                </div>
+                <div class="input-field-wrap">
+                  <label class="input-label" for="calc-birthdate">Ngày sinh:</label>
+                  <input type="date" id="calc-birthdate" class="calc-input" value="2000-01-01">
+                </div>
+              </div>
+
+              <button class="btn-cosmic btn-cosmic-primary" id="calc-stardust-btn" style="width: 100%;">
+                <i data-lucide="atom" class="icon-small"></i>
+                <span>Phân Tích Cội Nguồn Bụi Sao</span>
+              </button>
+
+              <div id="stardust-result" style="margin-top: 24px;">
+                <!-- Render kết quả tại đây -->
+              </div>
+            </div>
+
+            <!-- Thang đo quy mô vũ trụ -->
+            <div class="lab-card glass-panel">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <i data-lucide="maximize-2" class="icon-medium" style="color: var(--accent-void-cyan);"></i>
+                <h3 class="lab-card-title">Thước Đo Quy Mô Vạn Vật</h3>
+              </div>
+              <p class="lab-card-desc">
+                Kéo thanh trượt để di chuyển góc nhìn từ thế giới hạ nguyên tử vi mô đến những mạng lưới thiên hà siêu khổng lồ.
+              </p>
+
+              <input 
+                type="range" 
+                id="scale-slider" 
+                class="cosmic-slider" 
+                min="0" 
+                max="8" 
+                value="0" 
+                step="1"
+              >
+
+              <div class="scale-visual-bar-wrap">
+                <div id="scale-visual-indicator"></div>
+              </div>
+
+              <div class="scale-info-box" id="scale-info-card">
+                <h4 class="scale-entity-title" id="scale-title">Hạt Hạ Nguyên Tử (Proton)</h4>
+                <div class="scale-entity-size" id="scale-size">Kích thước: 0.000000000000001 m</div>
+                <p id="scale-desc" style="color: #cbd5e1; font-size: 0.92rem; line-height: 1.7;">
+                  Viên gạch cấu tạo nên mọi vật chất bạn chạm vào.
+                </p>
+              </div>
+
+              <!-- Trích dẫn triết học về quy mô -->
+              <div class="philosophical-quote" style="margin-top: 24px; border-left-color: var(--accent-void-cyan);">
+                <em>"Chúng ta đứng ở vị trí cân bằng kỳ lạ: kích thước con người nằm chính giữa kích thước hạt nguyên tử nhỏ nhất và toàn bộ vũ trụ khả kiến."</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Niên Đại Vũ Trụ (Cosmic Timeline) -->
+      <section class="section-wrapper" id="timeline">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-tag">
+              <i data-lucide="clock" class="icon-nano"></i>
+              <span>CHU KỲ VẠN VẬT</span>
+            </div>
+            <h2 class="section-title">DÒNG THỜI GIAN VŨ TRỤ</h2>
+            <p class="section-subtitle">
+              Từ tiếng nổ khai sinh ánh sáng 13.8 tỷ năm trước đến khi ngôi sao cuối cùng tàn lụi và hư vô chìm vào cái chết nhiệt vĩnh hằng.
+            </p>
+          </div>
+
+          <div class="timeline-track" id="timeline-items-container">
+            <!-- Render động bởi interactive-lab.js -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Modal Chi Tiết Thiên Thể (Cosmic Detail Portal) -->
+    <div class="modal-backdrop" id="cosmic-detail-modal">
+      <div class="modal-window">
+        <button class="modal-close-btn" id="modal-close-btn" title="Đóng cổng tri thức">
+          <i data-lucide="x" class="icon-small"></i>
+        </button>
+
+        <div class="modal-hero-image-wrap">
+          <img id="modal-img" src="" alt="Thiên thể" class="modal-hero-img">
+          <div class="card-overlay"></div>
+        </div>
+
+        <div class="modal-content-inner">
+          <div class="modal-header-meta">
+            <span class="badge" id="modal-badge"></span>
+            <span id="modal-designation" style="color: var(--text-dim); font-size: 0.85rem; font-family: var(--font-display);"></span>
+          </div>
+
+          <h2 class="modal-title" id="modal-title"></h2>
+
+          <div class="modal-quote-box">
+            <span id="modal-quote"></span>
+          </div>
+
+          <h4 style="color: var(--text-secondary); margin-bottom: 12px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em;">
+            Thông Số Khoa Học
+          </h4>
+          <div class="modal-details-grid" id="modal-details-grid">
+            <!-- Dynamic stats -->
+          </div>
+
+          <h4 style="color: var(--text-secondary); margin-bottom: 8px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em;">
+            Khảo Cứu Thiên Văn
+          </h4>
+          <p id="modal-overview" style="margin-bottom: 20px; line-height: 1.8; color: #e2e8f0;"></p>
+
+          <h4 style="color: var(--text-secondary); margin-bottom: 8px; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.08em;">
+            Vực Thẳm Ý Niệm & Triết Học
+          </h4>
+          <div class="modal-lore-text" id="modal-lore"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="brand-logo">
+              <div class="brand-icon-wrap">
+                <i data-lucide="disc" class="icon-small" style="color: #a855f7;"></i>
+              </div>
+              <div>
+                <span>ABYSSAL COSMOS</span>
+                <span class="brand-title-sub">HƯ KHÔNG VŨ TRỤ</span>
+              </div>
+            </div>
+            <p class="footer-desc">
+              Một dự án bách khoa và mô phỏng thiên văn học huyền ảo, sâu thẳm được kiến tạo & phát triển bởi <strong>Phạm Nhật Tiến</strong>. Được thiết kế nhằm mang lại sự rợn ngợp và niềm tôn kính trước vẻ đẹp vĩnh hằng của không gian.
+            </p>
+          </div>
+
+          <div class="footer-coords">
+            <span>Tác Giả & Sáng Lập: Phạm Nhật Tiến</span>
+            <span>Tọa Độ Không Gian: Nhánh Orion, Dải Ngân Hà</span>
+            <span>Hành Tinh Mẹ: Trái Đất (Terra - 1 AU)</span>
+            <span>Trạng Thái Hiện Tại: Kỷ Nguyên Tinh Tú (Stelliferous Era)</span>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 THE ABYSSAL COSMOS. Kiến tạo bởi <strong>Phạm Nhật Tiến</strong>. Hãy nhớ nhìn lên các vì sao chứ đừng nhìn xuống chân mình.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/fps-engine.js"></script>
+  <script src="js/cosmic-data.js"></script>
+  <script src="js/cosmic-audio.js"></script>
+  <script src="js/cosmos-canvas.js"></script>
+  <script src="js/blackhole-sim.js"></script>
+  <script src="js/solar-orrery.js"></script>
+  <script src="js/interactive-lab.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

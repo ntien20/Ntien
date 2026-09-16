@@ -1,0 +1,201 @@
+/* ==============================================================================
+   THE ABYSSAL COSMOS - HỆ THỐNG THIẾT KẾ CỐT LÕI (CORE DESIGN SYSTEM)
+   Bảng màu hư không sâu thẳm, typography hiện đại & biến CSS chuẩn mực
+============================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Dark Cosmic Palette */
+  --bg-abyss-black: #020205;
+  --bg-deep-void: #05050b;
+  --bg-card-surface: rgba(10, 10, 20, 0.72);
+  --bg-card-hover: rgba(18, 18, 38, 0.88);
+  --border-void: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(168, 85, 247, 0.35);
+
+  /* Primary Celestial Accents */
+  --accent-singularity: #c99a4e; /* Accretion Disk Warm Gold */
+  --accent-violet: #8b5cf6;      /* Relativistic Violet */
+  --accent-void-cyan: #00f5d4;   /* Spectral Nebula Cyan */
+  --accent-crimson: #ef233c;     /* Supernova / Magnetar Flare */
+  --accent-sky: #38bdf8;         /* Cosmic Dust Blue */
+
+  /* Text & Readability */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-dim: #64748b;
+  --text-highlight: #ffffff;
+
+  /* Typography */
+  --font-serif: 'Cinzel', serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Layout & Spacing */
+  --max-width: 1320px;
+  --header-height: 76px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 22px;
+  --border-radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background-color: var(--bg-abyss-black);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-abyss-black);
+  color: var(--text-primary);
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Canvas Background Fixed Layer */
+#cosmos-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+canvas {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Global Content Wrapper */
+.app-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-abyss-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
+}
+
+/* Typography Utility */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-wrapper {
+  padding: 100px 0;
+  position: relative;
+}
+
+/* Common Section Headers */
+.section-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 56px auto;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: var(--border-radius-full);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-void-cyan);
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 70%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Icons sizing */
+.icon-nano { width: 14px; height: 14px; }
+.icon-small { width: 18px; height: 18px; }
+.icon-medium { width: 24px; height: 24px; }
+.icon-large { width: 32px; height: 32px; }
